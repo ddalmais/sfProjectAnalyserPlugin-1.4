@@ -1,0 +1,4 @@
+config/plugin_sfpa.yml:
+  class:    sfSimpleYamlConfigHandler
+  param:
+    prefix: plugin_sfpa_

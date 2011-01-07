@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+  <name>sfProjectAnalyserPlugin</name>
+  <channel>pear.symfony-project.com</channel>
+  <summary>
+    The sfProjectAnalyserPlugin allows you to analyse your symfony project, it can
+    raise several coding standards alerts. A YAML configuration file allows you to
+    switch what to analyse and also allows you to parameter threshold for each alert.
+  </summary>
+  <!-- Short description that will be shown in the plugins list -->
+  <description>The sfProjectAnalyserPlugin allows you to analyse your symfony project, it can raise several coding standards alerts. A YAML configuration file allows you to switch what to analyse and also allows you to parameter threshold for each alert.</description>
+  <lead>
+    <name>Vernet Loic</name>
+    <user>COil</user>
+    <email>qrf_coil@yahoo.fr</email>
+    <active>yes</active>
+  </lead>
+  <developer>
+    <name>Marchal Gregoire</name>
+    <user>gregoire_m</user>
+    <email>gregoire.marchal@gmail.com</email>
+    <active>yes</active>
+  </developer>
+  <developer>
+    <name>Loeuillet Nicolas</name>
+    <user>NicolasLoeuillet</user>
+    <email>nicolas.loeuillet@gmail.com</email>
+    <active>yes</active>
+  </developer>
+  <helper>
+    <name>Levasseur Julien</name>
+    <user>arsenik7</user>
+    <email>julien.levasseur@gmail.com</email>
+    <active>yes</active>
+  </helper>
+  <date>2011-01-07</date>
+  <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+  </version>
+  <stability>
+    <release>stable</release>
+    <api>stable</api>
+  </stability>
+  <license uri="http://www.symfony-project.com/license">MIT license</license>
+  <notes>-</notes>
+  <contents>
+    <dir name="/">
+      <dir name="config">
+        <file name="config_handlers.yml" role="data" />
+        <file name="plugin_sfpa.yml" role="data" />
+      </dir>
+      <dir name="lib">
+        <dir name="objects">
+          <file name="paAlert.class.php" role="data" />
+          <file name="paAlertable.class.php" role="data" />
+          <file name="paClass.class.php" role="data" />
+          <file name="paInterface.class.php" role="data" />
+          <file name="paProject.class.php" role="data" />
+          <file name="paSfAction.class.php" role="data" />
+          <file name="paSfApplication.class.php" role="data" />
+          <file name="paSfClass.class.php" role="data" />
+          <file name="paSfComponent.class.php" role="data" />
+          <file name="paSfLayout.class.php" role="data" />
+          <file name="paSfModule.class.php" role="data" />
+          <file name="paSfPartial.class.php" role="data" />
+          <file name="paSfPluginApplication.class.php" role="data" />
+          <file name="paSfProject.class.php" role="data" />
+          <file name="paSfTemplate.class.php" role="data" />
+        </dir>
+        <dir name="task">
+          <file name="sfProjectAnalyseTask.class.php" role="data" />
+        </dir>
+      </dir>
+      <dir name="modules">
+        <dir name="sfProjectAnalyser">
+          <dir name="actions">
+            <file name="actions.class.php" role="data" />
+          </dir>
+          <dir name="templates">
+            <dir name="_partials">
+              <file name="_alert_7002.php" role="data" />
+              <file name="_bis_partial_7001_2.php" role="data" />
+            </dir>
+            <file name="_bis_partial_7001_1.php" role="data" />
+            <file name="alert6001Success.php" role="data" />
+            <file name="alert6002Success.php" role="data" />
+          </dir>
+        </dir>
+      </dir>
+      <dir name="web">
+        <dir name="images">
+          <file name="alert.png" role="data" />
+          <file name="check.png" role="data" />
+          <file name="minus.gif" role="data" />
+          <file name="plus.gif" role="data" />
+          <file name="symfony.png" role="data" />
+          <file name="treeview-black-line.gif" role="data" />
+          <file name="treeview-black.gif" role="data" />
+          <file name="warning.png" role="data" />
+        </dir>
+        <dir name="css">
+          <file name="jquery.treeview.css" role="data" />
+        </dir>
+        <dir name="js">
+          <file name="jquery.js" role="data" />
+          <file name="jquery.treeview.js" role="data" />
+        </dir>
+      </dir>
+      <file name="LICENSE" role="data" />
+      <file name="README" role="data" />
+    </dir>
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.1.0</min>
+      </php>
+      <pearinstaller>
+        <min>1.4.1</min>
+      </pearinstaller>
+      <package>
+        <name>symfony</name>
+        <channel>pear.symfony-project.com</channel>
+        <min>1.1.0</min>
+        <max>1.5.0</max>
+        <exclude>1.5.0</exclude>
+      </package>
+    </required>
+  </dependencies>
+  <phprelease />
+  <changelog>
+    <release>
+      <version>
+        <release>1.0.2</release>
+        <api>1.0.2</api>
+      </version>
+      <stability>
+       <release>stable</release>
+       <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2011-01-07</date>
+      <license>MIT</license>
+      <notes>
+        * Fixed the return code values
+        * Fixed color for ignored objects
+        * Deleted the sfProjectAnanlyserPlugin from the default config
+        * Fixed wrong count of alerts when using the XML output
+        * Fixed the color reporting for modules
+        * Added the possibility to ignore files or objects
+        * Fixed symfony CS ! :-)
+        * Added plugin config controls so the user know its custom config file must be upgraded
+        * Added alert for $this->executeXXX code at action level
+        * Cleanup
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.0.1</release>
+        <api>1.0.1</api>
+      </version>
+      <stability>
+       <release>stable</release>
+       <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2010-12-21</date>
+      <license>MIT</license>
+      <notes>
+        * Added a config option 'output' that allows to render the output as XML instead of HTML
+        * Fixed missing files in Package.xml :|
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.0.0</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+       <release>stable</release>
+       <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2010-12-21</date>
+      <license>MIT</license>
+      <notes>
+        * Fixed the class grouping algorithm
+        * Added a return system error code depending on the results of the analysis
+        * Added a threshold for symfony extended class in order to avoid displaying all classes of a type (mainly for model classes)
+        * Moved the 'plugin_assets_path' to the config plugin section
+        * Added an global option 'plugin_assets_path' to set the path of the plugin's assets
+        * Added a detected value 'all' for the config parameter [plugin][to_parse] to parse all the plugins of the project
+        * Fixed a bug with report generation date
+        * Added a config option for the compat10 mode
+        * Fixed bad warning reporting when using validateXXX methods and the compat1.0 plugin
+        * Fixed parsing of plugins [] = parse of no plugin
+        * Alert for empty application layouts and partials
+        * Alert for application layouts and partials code length
+        * Count of layouts and partials code length of applications
+        * Count of code and templates length by project, application, module
+        * Allowed to switch off alert by putting a false parameter
+        * Allowed to switch code length check to off if parameter is set to false instead of a threshold
+        * Fixed module generic alert count
+        * Fixed colored sections in red when having errors
+        * Added a Javascript folding system to have a cascade display (+ an "expand all" button)
+        * Skip auto-generated modules
+        * Parse activated plugins code
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>0.9.1</release>
+        <api>0.9.1</api>
+      </version>
+      <stability>
+       <release>beta</release>
+       <api>beta</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2010-07-01</date>
+      <license>MIT</license>
+      <notes>
+        * Added alerts for modules empty templates or partials
+        * Added alerts for too big modules templates or partials
+        * A demo module is now provided, it includes an example of each kind of alert
+        * Added count of modules templates and partials
+        * Refactored the way alerts are processed
+        * Switch percent to two digits        
+        * Transfered the TODO list in the README file
+        * Added an alert for functions with "sfContext::getInstance" calls
+        * The parsing of the same named modules into different applications is now possible
+        * Added an alert for functions without docblock
+        * Corrected docblock length calculation
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>0.8.0</release>
+        <api>0.8.0</api>
+      </version>
+      <stability>
+       <release>beta</release>
+       <api>beta</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2010-06-29</date>
+      <license>MIT</license>
+      <notes>
+        * This is the 1st version of the plugin.
+      </notes>
+    </release>
+  </changelog>
+</package>

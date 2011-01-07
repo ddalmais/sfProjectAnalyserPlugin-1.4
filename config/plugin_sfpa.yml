@@ -1,0 +1,67 @@
+################
+# HELP
+#
+# 1 - Set "max_code_length" to false if you don't want the code length check to be done
+# max_code_length: false
+#
+################
+
+# This is the default configuation of the plugin
+default:
+  # Global settings
+  global:
+    check_functions_docblock:   true  # Raise an alert if a function does not have its docblock
+    check_context_get_instance: true  # Raise an alert is "sfContext::getInstance()" is encountered in the code
+    check_plugins:              true  # Allow to parse plugins code
+    check_compat10:             true  # Tells if plugin must raise alert when encontring compat10 specific code
+    ignored_objects:                  # The analysis will ignore and not parse the following objects:
+      application: []  # Example: [backend, application_tests]
+      classes:     []  # Example: [myTestClass, myMuckClass]
+      module:      []  # Example: [frontend/tests]
+      action:      []  # Example: [frontend/auth/poc]
+      template:    []  # Example: [frontend/activation/toolongSuccess.php
+      partial:     []  # Example: [frontend/language/_partial_of_the_death.js.php]
+      layout:      []  # Example: [frontend/layout_for_dev.php]
+
+  # Project level settings
+  project:
+
+  # Application level settings
+  application:
+
+  # Classes and interface level settings
+  classes:
+    grouping_limit:    10             # When displaying the symfony extended classes,
+                                      # does not display child classes if their count is beyond this threshold
+
+  # Module level settings
+  module:
+    # Set to false, if you don't want to do this check
+    max_actions_count:  20            # Raise an alert if number of actions of a module is beyond this threshold
+
+  # Actions level settings
+  action:
+    max_code_length:    50            # Raise an alert if action code if over this threshold
+    check_other_actions_call: true    # Check if there are calls like $this->executeXXX()
+
+  # Template level settings
+  template:
+    max_code_length:   100            # Raise an alert if the template length if over this threshold
+    check_empty:      true            # Raise an alert if an empty template is encountered
+
+  # Partial level settings
+  partial:
+    max_code_length:   50             # Raise an alert if the partial length if over this threshold
+    check_empty:      true            # Raise an alert if an empty partial is encountered
+
+  # Layout level settings
+  layout:
+    max_code_length:   100            # Raise an alert if the layout length is over this threshold
+    check_empty:      true            # Raise an alert if the layout is empty
+
+  plugin:
+    to_parse:         [] # array of plugins to parse: example [sfProjectAnalyserPlugin], '[]' for none and '[all]' for all
+    assets_path:      "web/sfProjectAnalyserPlugin" # Path were can be found the assets of the plugin (relative to the output of the task)
+    
+# To add a custom config copy/past this file in your config directory, it will
+# automatically override this one

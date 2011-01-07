@@ -1,0 +1,209 @@
+sfProjectAnalyserPlugin
+-----------------------
+
+The **sfProjectAnalyserPlugin** allows you to analyse your symfony 1.x project, it can
+raise several **coding standards** alerts. A YAML configuration file allows you to
+switch what to analyse and also allows you to parameter **threshold** for each alert.
+
+This plugin can be helpful in mainly two situations:
+
+  * You quickly want to check **the volumetry and code quality** of a project your
+  are going to maintain.
+  * While developing a project from scratch, as a **continuous integration tool**,
+  to ensure that as the project grows, you keep on following the **symfony coding
+  standarts** you defined at the very beginning of your project.
+
+Features list:
+
+  * Result output:
+    * As HTML or as XML (check option `output`)
+
+  * Stats
+    * Count/list of applications, modules, actions (by project, application, module)
+    * Count/list of number of templates and partials (by module)
+    * Count actions, templates and partials code length (by project, application, module)
+    * Count of layouts and partials code length of applications
+    * Count/list of plugins
+    * Count/list of classes / interfaces
+    * Count/list of symfony extended classes
+
+  * Alerts
+    * Alert for public non action methods in a module
+    * Alert for modules including too much actions
+    * Alert for functions without docblock
+    * Alert for calls of "sfContext::getInstance()"
+    * Alert for modules templates and partials code length
+    * Alert for empty modules templates and partials
+    * Alert for application layouts and partials code length
+    * Alert for empty application layouts and partials
+    * Alert for actions calling others actions ($this->executeXXX(), code:4004)
+
+Installation
+============
+
+ * Install the plugin
+
+        $ ./symfony plugin:install sfProjectAnalyserPlugin
+
+    * You can also checkout the svn repository
+      * [symfony 1.1.x, 1.2.x, 1.3.x, 1.4.x](http://svn.symfony-project.com/plugins/sfProjectAnalyserPlugin/)
+
+ * Clear your cache
+
+        $ ./symfony cc
+
+ * Enable the plugin for your project: (`/config/ProjectConfiguration.class`)
+
+        [php]
+        require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
+        sfCoreAutoload::register();
+
+        class ProjectConfiguration extends sfProjectConfiguration
+        {
+          public function setup()
+          {
+            $this->enablePlugins(
+              'sfDoctrinePlugin',
+              'sfProjectAnalyserPlugin'
+              // ....
+            );
+          }
+        }
+
+ * Publish the assets of the plugin to have the alerts logos
+
+        $ ./symfony plugin:publish-assets
+
+ * Run the analysis (using the default configuration)
+
+        $ ./symfony project:analyse --application="frontend" --env="dev" > analysis.html
+
+ * Then browse (locally) the generated html file "analysis.html"
+
+ * Correct the code or modify your coding standards rules until having the
+   wonderfull **"Congratulations ! Green message"**. ^^
+
+**Note**: Obviously the better is to CRON the task to send the report by email
+
+**Note2**: You can also get the output as XML, with the `output` option:
+
+        $ ./symfony project:analyse --application="frontend" --env="dev" --output="xml" > analysis.html
+
+In this case it will return an xml string like this:
+
+    <?xml version="1.0"?>
+    <response>
+      <success>0</success>
+      <error>1</error>
+      <summary>
+        <alert>3</alert>
+        <crit>0</crit>
+        <err>0</err>
+        <warning>1</warning>
+        <notice>0</notice>
+        <info>0</info>
+      </summary>
+    </response>
+
+Configuration
+=============
+
+The plugin comes with a *default* configuration, but you can add several ones with
+other rules and thresholds:
+
+ * Copy the `/plugins/sfProjectAnalyserPlugin/config/plugin_sfpa.yml` into
+   the `config` folder of your application. Then this file will be used instead
+   of the plugin one.
+
+ * Now, you can add your own configurations. You should keep the `default` one witch
+   is the basic configuration provided by the plugin.
+
+        # This is a custom analyser configuration
+        my_config:
+          # Global settings
+          global:
+            check_functions_docblock:   true  # Raise an alert if a function does not have its docblock
+            check_context_get_instance: true  # Raise an alert is "sfContext::getInstance()" is encountered in the code
+            ...
+
+This file is self documented, you will find a comment for each treshold / flag / option.
+
+**Note**: The default configuration is quiet strict ! So don't be scared if
+it raises lots of alerts. ;) You'll have to tune or create your own configuration file.
+
+**Note2**: If an exception of this type is raised:
+
+        Can't find the 'check_plugins' setting in the 'global' section, please update your plugin config file
+
+It means that the default config file of the plugin was modified. (or new settings
+were introduced) Therefore you will have to reflect these changes into your custom
+configuration file.
+
+Usage
+=====
+
+To use your own configuration just pass the config option to the task:
+
+    $ php symfony project:analyse --application="frontend" --env="dev" --config="my_config" > analysis.html
+
+Where `my_config` is the config key name defined in your YAML file. (like above)
+
+Demo
+====
+
+A demo included in the plugin, you can test it with a sandbox project for example.
+Add the `sfProjectAnalyserPlugin` plugin in the `to_parse` setting of your configuration
+file in order to activate the demo.
+
+TODO / ROADMAP
+==============
+
+**1.0.3:**
+
+  * Alert for TODO, FIXME tags in the code or the comments
+  * Add a panel that will show all settings for the analysis (desactivated = red)
+  * Raise alerts for classes including methods without docblock
+  * Allow to parse custom actions files - COil
+  * Alert for ORM code at the action level
+
+**1.0.4:**
+
+  * When raising an alerts display the related code "a la sfException" (highlighted)
+  * Count number of ORM statments in the Doctrine or Propel model classes
+  * Count langs, i18n catalogs and traductions
+  * Count helpers / functions
+
+**1.1.0:**
+
+  * Refactor alerts checks so that all processAlertXXXX functions are called automatically
+  * Use factories to override plugins main objects classes
+
+**Other ideas:**
+
+  * Refactor the last alert for the alert summary so we don't have to handle this special case
+  * Refactor the ignore feature so objects are displayed but don't raise any alerts ? (will depend on feedback)
+
+PS: You can also send me a contribution request if you have good ideas for new
+alerts or other enhancements. :)
+
+Support
+=======
+
+Please report bugs on the official plugin post on my [symfony blog](http://www.strangebuzz.com). (not posted yet :))
+I may also answer if you ask on the symfony users mailing list.
+
+Have fun, [COil](http://www.strangebuzz.com) ;)
+
+Known bugs
+==========
+
+* Helpers are not parsed
+* Lib folders of plugins are not parsed
+* ysfDimmensionPlugin is not supported for now (but will not raise errors)
+* Standart checks are not done in the validateXXX methods when using the compat10 mode
+
+----
+
+This plugin is sponsored by [SQL-Technologies](http://www.sqltechnologies.com)
+
+![SQL Technologies](http://www.php-debug.com/images/sql.gif)
