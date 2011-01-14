@@ -33,7 +33,7 @@
     <email>julien.levasseur@gmail.com</email>
     <active>yes</active>
   </helper>
-  <date>2011-01-07</date>
+  <date>2011-01-14</date>
   <version>
     <release>1.0.2</release>
     <api>1.0.2</api>
@@ -140,9 +140,10 @@
        <api>stable</api>
       </stability>
       <license uri="http://www.symfony-project.com/license">MIT license</license>
-      <date>2011-01-07</date>
+      <date>2011-01-14</date>
       <license>MIT</license>
       <notes>
+        * Fixed alert reporting for admin generated modules
         * Fixed the return code values
         * Fixed color for ignored objects
         * Deleted the sfProjectAnanlyserPlugin from the default config

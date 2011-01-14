@@ -545,4 +545,17 @@ class paSfModule extends paAlertable
       && ($method->getName() != 'preExecute' && $method->getName() != 'postExecute')  // is not preExecute or postExecute
     );
   }
+
+  /**
+   * Debug object.
+   *
+   * @return String
+   */
+  public function __toString()
+  {
+    return
+      'parent ('. get_class($this). ')='. $this->getApplication()->getName(). ', '.
+      'name='.        $this->getName()
+    ;
+  }
 }
