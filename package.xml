@@ -33,10 +33,10 @@
     <email>julien.levasseur@gmail.com</email>
     <active>yes</active>
   </helper>
-  <date>2011-01-14</date>
+  <date>2011-01-18</date>
   <version>
-    <release>1.0.2</release>
-    <api>1.0.2</api>
+    <release>1.0.3</release>
+    <api>1.0.3</api>
   </version>
   <stability>
     <release>stable</release>
@@ -132,6 +132,22 @@
   <changelog>
     <release>
       <version>
+        <release>1.0.3</release>
+        <api>1.0.3</api>
+      </version>
+      <stability>
+       <release>stable</release>
+       <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2011-01-18</date>
+      <license>MIT</license>
+      <notes>
+        * Added a panel that shows all settings of the analysis
+      </notes>
+    </release>
+    <release>
+      <version>
         <release>1.0.2</release>
         <api>1.0.2</api>
       </version>
@@ -143,6 +159,7 @@
       <date>2011-01-14</date>
       <license>MIT</license>
       <notes>
+        * Add a panel that will show all settings for the analysis
         * Fixed alert reporting for admin generated modules
         * Fixed the return code values
         * Fixed color for ignored objects

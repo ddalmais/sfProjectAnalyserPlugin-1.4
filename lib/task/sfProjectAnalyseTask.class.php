@@ -163,7 +163,7 @@ EOF;
    */
   protected function checkConfig($config)
   {
-    $requiredSettings = array(
+    $this->settings = array(
       'global' => array(
         'check_functions_docblock',
         'check_context_get_instance',
@@ -201,7 +201,7 @@ EOF;
       )
     );
 
-    foreach ($requiredSettings as $section => $settings)
+    foreach ($this->settings as $section => $settings)
     {
       foreach ($settings as $setting)
       {
@@ -249,12 +249,13 @@ EOF;
   {    
     $html  = '';
     $html .= $this->getHeader(). '<hr/>';
+    $html .= $this->getConfigSummary(). '<hr/>';
     $html .= $this->getProjectOutput(). '<hr/>';
     $html .= '
 	<div id="treecontrol">
-          <a title="Collapse the entire tree below" href="#"><img src="%plugin_assets_path%/images/minus.gif" />Collapse All</a>
-          <a title="Expand the entire tree below" href="#"><img src="%plugin_assets_path%/images/plus.gif" />Expand All</a>
-          <a title="Toggle the tree below, opening closed branches, closing open branches" href="#">Toggle All</a>
+    <a title="Collapse the entire tree below" href="#"><img src="%plugin_assets_path%/images/minus.gif" />Collapse All</a>
+    <a title="Expand the entire tree below" href="#"><img src="%plugin_assets_path%/images/plus.gif" />Expand All</a>
+    <a title="Toggle the tree below, opening closed branches, closing open branches" href="#">Toggle All</a>
 	</div>';
 
     // Fix assets path
@@ -279,6 +280,21 @@ EOF;
     
     $html .= $this->getFooter();
 
+    return $html;
+  }
+
+  /**
+   * Panel that displays the configuration used.
+   */
+  protected function getConfigSummary()
+  {
+    $html =  '<ul id="summary" class="treeview-black">';
+    $html .= '<li class="closed"><span class="folder"><strong>Analysis configuration</strong></span>';
+    $html .= '<ul>';
+    $html .= '  <li><pre>'. sfYaml::dump($this->config). '</pre></li>';
+    $html .= '</ul>';
+    $html .= '</ul>';
+    
     return $html;
   }
   
@@ -722,7 +738,7 @@ h1
 <script src="plugin_assets_path/js/jquery.treeview.js" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
-        $("#project, #plugins").treeview({
+        $("#project, #plugins, #summary").treeview({
             control: "#treecontrol"
         });
     });

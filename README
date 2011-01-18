@@ -161,7 +161,6 @@ TODO / ROADMAP
 **1.0.3:**
 
   * Alert for TODO, FIXME tags in the code or the comments
-  * Add a panel that will show all settings for the analysis (desactivated = red)
   * Raise alerts for classes including methods without docblock
   * Allow to parse custom actions files - COil
   * Alert for ORM code at the action level
