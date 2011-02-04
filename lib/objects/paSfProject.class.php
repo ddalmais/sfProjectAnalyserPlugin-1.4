@@ -412,6 +412,7 @@ class paSfProject extends paProject
   protected function processPlugins()
   {
     $pluginsToParse = $this->config['plugin']['to_parse'];
+    $pluginsToIgnore = $this->config['plugin']['to_ignore'];
     $parseAllPlugin = isset($pluginsToParse[0]) ? $pluginsToParse[0] == 'all' : false;
 
     $plugins = array();
@@ -427,7 +428,9 @@ class paSfProject extends paProject
       preg_match(paProject::$regexps['ENDING_FILENAME'], $pluginDirectory, $matches);
       if ($parseAllPlugin || in_array($matches[1], $pluginsToParse))
       {
-        $plugins[] = new paSfPluginApplication($this, $matches[1]);
+        if(!in_array($matches[1], $pluginsToIgnore)){
+            $plugins[] = new paSfPluginApplication($this, $matches[1]);
+        }
       }
     }
 
