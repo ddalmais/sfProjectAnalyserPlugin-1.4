@@ -61,6 +61,7 @@ default:
 
   plugin:
     to_parse:         [] # array of plugins to parse: example [sfProjectAnalyserPlugin], '[]' for none and '[all]' for all
+    to_ignore:        [] # array of plugins to ignore if to_parse equal [all] 
     assets_path:      "web/sfProjectAnalyserPlugin" # Path were can be found the assets of the plugin (relative to the output of the task)
     
 # To add a custom config copy/past this file in your config directory, it will
