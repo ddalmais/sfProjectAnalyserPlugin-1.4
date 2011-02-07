@@ -278,6 +278,9 @@ EOF;
       $html .= $this->addline();
     }
     
+    $html .= $this->getLibsOutput($alert);
+    $html .= $this->addline();
+      
     $html .= $this->getFooter();
 
     return $html;
@@ -437,6 +440,43 @@ EOF;
     return $html;
   }
 
+  /**
+   * Output lib details.
+   *
+   * @return String
+   */
+  protected function getPluginsOutput()
+  {
+    $html = '';
+    $html .= '<ul id="libs" class="treeview-black">';
+
+    foreach ($this->project->getClasses() as $class)
+    {
+      if(count($class->getAlerts())>0){
+           $html .= '<li><span class="folder"><strong>Class '. $class->getName() . '</strong></span>';
+           $html .= '<ul>';
+           foreach ($class->getAlerts() as $alert)
+           {
+              $html .=$this->getAlertOutput($alert);
+           }
+           $html .= '</ul>';
+       }
+       foreach($class->getMethods() as $method){
+          if(count($method->getAlerts())>0){
+              $html .= '<li><span class="folder"><strong>Methode '. $class->getName().'::'. $method->getName(). '</strong></span>';
+              $html .= '<ul>';
+              foreach ($method->getAlerts() as $mAlert)
+              {
+                 $html .= $this->getAlertOutput($mAlert);
+              }
+              $html .= '</ul>';
+          }
+      }
+    }
+
+    return $html;
+  }
+  
   /**
    * Output plugins details.
    *
