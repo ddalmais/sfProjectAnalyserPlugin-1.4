@@ -11,6 +11,7 @@ default:
   # Global settings
   global:
     check_functions_docblock:   true  # Raise an alert if a function does not have its docblock
+	check_class_docblock:       false # Raise an alert if a class does not have its docblock
     check_context_get_instance: true  # Raise an alert is "sfContext::getInstance()" is encountered in the code
     check_plugins:              true  # Allow to parse plugins code
     check_compat10:             true  # Tells if plugin must raise alert when encontring compat10 specific code
