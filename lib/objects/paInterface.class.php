@@ -22,6 +22,24 @@ class paInterface extends paAlertable
    * @var Integer  Count of code lines
    */
   protected $codeLength = 0;
+  
+  /**
+   * @var Integer  Comment lines if the code
+   */
+  protected $commentsLength = 0;
+  
+  
+  /**
+   * @var String  The doc comment block of the function is it exists
+   */
+  public $docComment;
+  
+  
+  /**
+   * @var Array The list of PaMethods
+   */
+  protected $paMethods;
+  
 
   /* GETTERS / SETTERS ********************************************************/
 
@@ -50,6 +68,22 @@ class paInterface extends paAlertable
     return $this->getCodeLength();
   }
 
+  public function getCommentsLength()
+  {
+    return $this->commentsLength;
+  }
+  
+  public function getMethods()
+  {
+    return $this->paMethods;
+  }
+  
+  public function setDocComment($docComment)
+  {
+   $this->docComment     = $docComment;
+   $this->commentsLength = !empty($docComment) ? count(explode("\n", $docComment)) : 0;
+  }
+  
   /* END GETTERS / SETTERS ****************************************************/
 
   /**
@@ -85,6 +119,14 @@ class paInterface extends paAlertable
     $this->processAlerts();
   }
 
+ public function getGlobalConfig()
+  {
+    $config = $this->getParent()->getConfig();
+    return $config['global'];
+  }
+
+  
+  
   /**
    * Check specific alerts.
    *
@@ -93,5 +135,41 @@ class paInterface extends paAlertable
    */
   public function processAlerts()
   {
+      $globalConfig = $this->getGlobalConfig();
+      $config       = array();
+      $paMethods = array();
+      
+      $this->reflection=new ReflectionClass($this->getName());   
+      $this->processAlert4002($globalConfig,$config);
+      
+      foreach ($this->reflection->getMethods() as $method){
+          $paMethod=new paMethod($this,$method->getName());
+          $paMethod->setDocComment($method->getDocComment());
+          $paMethod->process();
+          $paMethods[] = $paMethod;
+      }
+      
+      $this->paMethods = $paMethods;
+  }
+  
+ /**
+   * @internal See message & help.
+   *
+   * @since V0.9.0 - 30/06/10
+   */
+  protected function processAlert4002($globalConfig, $config)
+  {    
+    if ($globalConfig['check_class_docblock'] && $this->commentsLength == 0)
+    {
+        
+      $alert = new paAlert(
+        paAlert::ALERT_ACTION_CHECK_DOC_BLOCK,
+        paAlert::WARNING,
+        sprintf('The class or interface "%s" does not have a docblock !', $this->getName()),
+        'Take some time to document the class or the interface'
+      );
+
+      $this->addAlert($alert);
+    }
   }
 }

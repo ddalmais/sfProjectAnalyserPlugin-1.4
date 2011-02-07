@@ -269,11 +269,17 @@ class paSfProject extends paProject
     foreach ($this->interfaces as $interface)
     {
       $countAlerts += $interface->countAlerts($status);
+      foreach($interface->getMethods() as $method){
+          $countAlerts += $method->countAlerts($status);
+      }
     }
 
     foreach ($this->classes as $class)
     {
       $countAlerts += $class->countAlerts($status);
+      foreach($class->getMethods() as $method){
+          $countAlerts += $method->countAlerts($status);
+      }
     }
 
     // Project
@@ -334,7 +340,6 @@ class paSfProject extends paProject
     {
       $plugin->process();
     }
-
     foreach ($this->classes as $class)
     {
       $class->process();
@@ -422,7 +427,7 @@ class paSfProject extends paProject
       ->not_name('.*')
       ->in($this->paths['sf_plugins_dir'])
     ;
-    
+   
     foreach ($results as $pluginDirectory)
     {
       preg_match(paProject::$regexps['ENDING_FILENAME'], $pluginDirectory, $matches);
@@ -434,6 +439,15 @@ class paSfProject extends paProject
       }
     }
 
+   if($parseAllPlugin){
+         $this->processLib($this->paths['sf_plugins_dir'],false,
+             array_merge($pluginsToIgnore,
+             	array('templates',
+                'actions'
+             	)),
+              array('*Generator*'));
+    }
+    
     $this->plugins = $plugins;
   }
 
@@ -442,11 +456,14 @@ class paSfProject extends paProject
    * a clean list of class used. Class starting as sf and Doctrine are considered
    * as symfony native classes.
    */
-  protected function processLib()
+  protected function processLib($path=null,$required=true,$prune=array(),$not_name=array())
   {
     $classes        = array();
     $interfaces     = array();
-    $libObjects     = $this->extractClasses($this->paths['sf_lib_dir']);
+    if(is_null($path)){
+        $path=$this->paths['sf_lib_dir'];
+    }
+    $libObjects     = $this->extractClasses($path,$prune,$not_name);
     $ignoredClasses = $this->getIgnoredObjects('classes');
 
     foreach ($libObjects as $class => $filePath)
@@ -458,12 +475,16 @@ class paSfProject extends paProject
       }
 
       $object = null;
-
+      
       if (class_exists($class))
       {
         // Create the reflection object
         $reflectionClass = new ReflectionClass($class);
-        $parent = $reflectionClass->getParentClass();
+        try{
+            $parent = $reflectionClass->getParentClass();
+        }catch (Exception $e){
+            
+        }
         
         while ($parent instanceof ReflectionClass)
         {
@@ -510,20 +531,23 @@ class paSfProject extends paProject
       }
       // Unkown error for this class
       else
-      {
+      {  
         // Error
-        throw new RuntimeException('Problem with class : '. $class. ', if seems like a bug of the plugin send me an email. :)');
+        if($required){
+            throw new RuntimeException('Problem with class : '. $class. ', if seems like a bug of the plugin send me an email. :)');
+        }
       }
 
       // Compute file length
       $fileContent = file_get_contents($filePath);
 
       // Keep the file name in the object ??
-      $object->setCodeLength(empty($fileContent) ? 0 : count(explode("\n", $fileContent)));
+      if($object)
+          $object->setCodeLength(empty($fileContent) ? 0 : count(explode("\n", $fileContent)));
     }
 
-    $this->interfaces = $interfaces;
-    $this->classes    = $classes;
+    $this->interfaces = array_merge($this->interfaces ,$interfaces);
+    $this->classes    = array_merge($this->classes ,$classes);
   }
 
   /**
@@ -531,23 +555,39 @@ class paSfProject extends paProject
    *
    * @see sfAutoloadCore::make
    */
-  public function extractClasses($sfLibDir)
+  public function extractClasses($sfLibDir,$prune=array(),$not_name=array())
   {
     $files = sfFinder::type('file')
       ->prune('plugins')
+      ->prune('fixtures')
       ->prune('vendor')
       ->prune('skeleton')
       ->prune('default')
       ->prune('helper')
-      ->name('*.php')
-      ->in($sfLibDir)
-    ;
-
+      ->prune('test');
+      
+    foreach ($prune as $pr) {
+        $files->prune($pr);
+    }
+     
+    foreach ($not_name as $nn) {
+        $files->not_name($nn);
+    }
+    
+    if(strtolower(sfConfig::get('sf_orm'))=='doctrine'){
+        $files->not_name('*Propel*');
+    }else{
+        $files->not_name('*Doctrine*');
+    }
+    
+    $files=$files->name('*.php')
+                 ->in($sfLibDir);
     sort($files, SORT_STRING);
 
     $classes = array();
     foreach ($files as $file)
     {
+      sfSimpleAutoload::getInstance()->addFile($file);
       $file  = str_replace(DIRECTORY_SEPARATOR, '/', $file);
       $class = basename($file, false === strpos($file, '.class.php') ? '.php' : '.class.php');
 
