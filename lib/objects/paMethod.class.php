@@ -43,6 +43,11 @@ class paMethod extends paAlertable
    */
   protected $characters = 0;
   
+  /**
+   * @var ReflectionMethod the method
+   */
+  protected $method;
+  
   /* GETTERS / SETTERS ********************************************************/
 
   public function getPaInterface()

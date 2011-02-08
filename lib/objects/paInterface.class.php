@@ -143,10 +143,13 @@ class paInterface extends paAlertable
       $this->processAlert4002($globalConfig,$config);
       
       foreach ($this->reflection->getMethods() as $method){
-          $paMethod=new paMethod($this,$method->getName());
-          $paMethod->setDocComment($method->getDocComment());
-          $paMethod->process();
-          $paMethods[] = $paMethod;
+          //Ignore herited method that was not redeclared
+          if($this->getName()==$method->class){
+              $paMethod=new paMethod($this,$method->getName());
+              $paMethod->setDocComment($method->getDocComment());
+              $paMethod->process();
+              $paMethods[] = $paMethod;
+          }
       }
       
       $this->paMethods = $paMethods;
