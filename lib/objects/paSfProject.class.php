@@ -269,16 +269,18 @@ class paSfProject extends paProject
     foreach ($this->interfaces as $interface)
     {
       $countAlerts += $interface->countAlerts($status);
-      foreach($interface->getMethods() as $method){
-          $countAlerts += $method->countAlerts($status);
+      foreach($interface->getMethods() as $method)
+      {
+        $countAlerts += $method->countAlerts($status);
       }
     }
 
     foreach ($this->classes as $class)
     {
       $countAlerts += $class->countAlerts($status);
-      foreach($class->getMethods() as $method){
-          $countAlerts += $method->countAlerts($status);
+      foreach($class->getMethods() as $method)
+      {
+        $countAlerts += $method->countAlerts($status);
       }
     }
 

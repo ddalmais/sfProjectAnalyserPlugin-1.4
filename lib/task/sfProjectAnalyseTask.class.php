@@ -169,7 +169,8 @@ EOF;
         'check_context_get_instance',
         'check_plugins',
         'check_compat10',
-        'ignored_objects'
+        'ignored_objects',
+        'check_class_docblock'
       ),
       'project' => array(),
       'application' => array(),
@@ -197,6 +198,7 @@ EOF;
       ),
       'plugin' => array(
         'to_parse',
+        'to_ignore',
         'assets_path'
       )
     );
@@ -445,32 +447,38 @@ EOF;
    *
    * @return String
    */
-  protected function getPluginsOutput()
+  protected function getLibsOutput()
   {
     $html = '';
     $html .= '<ul id="libs" class="treeview-black">';
 
     foreach ($this->project->getClasses() as $class)
     {
-      if(count($class->getAlerts())>0){
-           $html .= '<li><span class="folder"><strong>Class '. $class->getName() . '</strong></span>';
-           $html .= '<ul>';
-           foreach ($class->getAlerts() as $alert)
-           {
-              $html .=$this->getAlertOutput($alert);
-           }
-           $html .= '</ul>';
-       }
-       foreach($class->getMethods() as $method){
-          if(count($method->getAlerts())>0){
-              $html .= '<li><span class="folder"><strong>Methode '. $class->getName().'::'. $method->getName(). '</strong></span>';
-              $html .= '<ul>';
-              foreach ($method->getAlerts() as $mAlert)
-              {
-                 $html .= $this->getAlertOutput($mAlert);
-              }
-              $html .= '</ul>';
+      if(count($class->getAlerts())>0)
+      {
+        $html .= '<li><span class="folder"><strong>Class '. $class->getName(). '</strong></span>';
+        $html .= '<ul>';
+        foreach ($class->getAlerts() as $alert)
+        {
+          $html .= $this->getAlertOutput($alert);
+        }
+        $html .= '</ul>';
+      }
+      
+      foreach($class->getMethods() as $method)
+      {
+        if(count($method->getAlerts()) > 0)
+        {
+          $html .= '<li><span class="folder"><strong>Methode '. $class->getName(). '::'. $method->getName(). '</strong></span>';
+          $html .= '<ul>';
+
+          foreach ($method->getAlerts() as $mAlert)
+          {
+            $html .= $this->getAlertOutput($mAlert);
           }
+          
+          $html .= '</ul>';
+        }
       }
     }
 
