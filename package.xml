@@ -143,6 +143,7 @@
       <date>2011-01-18</date>
       <license>MIT</license>
       <notes>
+        * Modified the error message when a class is not found
         * Added a panel that shows all settings of the analysis
       </notes>
     </release>

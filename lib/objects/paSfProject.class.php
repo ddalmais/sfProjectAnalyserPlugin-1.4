@@ -482,10 +482,12 @@ class paSfProject extends paProject
       {
         // Create the reflection object
         $reflectionClass = new ReflectionClass($class);
-        try{
-            $parent = $reflectionClass->getParentClass();
-        }catch (Exception $e){
-            
+        try
+        {
+          $parent = $reflectionClass->getParentClass();
+        }
+        catch (Exception $e)
+        {
         }
         
         while ($parent instanceof ReflectionClass)
@@ -535,8 +537,9 @@ class paSfProject extends paProject
       else
       {  
         // Error
-        if($required){
-            throw new RuntimeException('Problem with class : '. $class. ', if seems like a bug of the plugin send me an email. :)');
+        if ($required)
+        {
+          throw new RuntimeException('Class : '. $class. ' not found, verify both its class name and file name case, if it seems like a bug of the plugin send me an email. :)');
         }
       }
 
@@ -545,7 +548,9 @@ class paSfProject extends paProject
 
       // Keep the file name in the object ??
       if($object)
-          $object->setCodeLength(empty($fileContent) ? 0 : count(explode("\n", $fileContent)));
+      {
+        $object->setCodeLength(empty($fileContent) ? 0 : count(explode("\n", $fileContent)));
+      }
     }
 
     $this->interfaces = array_merge($this->interfaces ,$interfaces);
@@ -568,22 +573,26 @@ class paSfProject extends paProject
       ->prune('helper')
       ->prune('test');
       
-    foreach ($prune as $pr) {
-        $files->prune($pr);
+    foreach ($prune as $pr)
+    {
+      $files->prune($pr);
     }
      
-    foreach ($not_name as $nn) {
-        $files->not_name($nn);
+    foreach ($not_name as $nn)
+    {
+      $files->not_name($nn);
     }
     
-    if(strtolower(sfConfig::get('sf_orm'))=='doctrine'){
-        $files->not_name('*Propel*');
-    }else{
-        $files->not_name('*Doctrine*');
+    if(strtolower(sfConfig::get('sf_orm'))=='doctrine')
+    {
+      $files->not_name('*Propel*');
+    }
+    else
+    {
+      $files->not_name('*Doctrine*');
     }
     
-    $files=$files->name('*.php')
-                 ->in($sfLibDir);
+    $files = $files->name('*.php')->in($sfLibDir);
     sort($files, SORT_STRING);
 
     $classes = array();
