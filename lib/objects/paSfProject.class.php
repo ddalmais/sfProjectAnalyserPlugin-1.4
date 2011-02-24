@@ -383,7 +383,8 @@ class paSfProject extends paProject
       $this->processPlugins();
     }
 
-    $this->processLib();    
+    // TOFIX...
+    //$this->processLib();
   }
 
   /**
