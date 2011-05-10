@@ -33,7 +33,7 @@
     <email>julien.levasseur@gmail.com</email>
     <active>yes</active>
   </helper>
-  <date>2011-01-18</date>
+  <date>2011-05-10</date>
   <version>
     <release>1.0.3</release>
     <api>1.0.3</api>
@@ -140,11 +140,11 @@
        <api>stable</api>
       </stability>
       <license uri="http://www.symfony-project.com/license">MIT license</license>
-      <date>2011-01-18</date>
+      <date>2011-05-10</date>
       <license>MIT</license>
       <notes>
+        * Fixed bug when having a module extending a base actions class but not overriding all its methods
         * Modified the error message when a class is not found
-        * Added a panel that shows all settings of the analysis
       </notes>
     </release>
     <release>

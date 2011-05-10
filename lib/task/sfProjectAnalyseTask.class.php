@@ -658,13 +658,24 @@ EOF;
     
     foreach ($module->getActions() as $action)
     {
-      $codePercent = round(($action->getCodeLength() / $action->getTotalCodeLength()) * 100);
-      $html .= sprintf('Action <b>%s</b> has %d code line(s) (code: %s%% comments: %s%%)',
-        $action->getName(),
-        $action->getTotalCodeLength(),
-        $codePercent,
-        100 - $codePercent
-      ). $this->addline();
+      // Avoid Div by 0 bug if unexcepted error occured when getting the action code
+      if ($action->getTotalCodeLength() != 0)
+      {
+        $codePercent = round(($action->getCodeLength() / $action->getTotalCodeLength()) * 100);
+        $html .= sprintf('Action <b>%s</b> has %d code line(s) (code: %s%% comments: %s%%)',
+          $action->getName(),
+          $action->getTotalCodeLength(),
+          $codePercent,
+          100 - $codePercent
+        ). $this->addline();
+      }
+      else
+      {
+          $html .= sprintf('Action <b>%s</b> has %d code line(s), bug ? (code: ?, comments: ?)',
+            $action->getName(),
+            $action->getTotalCodeLength()
+          ). $this->addline();
+      }
 
       // Display actions alerts
       foreach ($action->getAlerts() as $alert)

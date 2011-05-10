@@ -158,19 +158,20 @@ file in order to activate the demo.
 TODO / ROADMAP
 ==============
 
-**1.0.3:**
+**1.0.4:**
 
   * Alert for TODO, FIXME tags in the code or the comments
   * Raise alerts for classes including methods without docblock
-  * Allow to parse custom actions files - COil
+  * Allow to get actions declared in a top action class
+  * Allow to parse custom actions files
   * Alert for ORM code at the action level
 
-**1.0.4:**
+**1.0.5:**
 
-  * When raising an alerts display the related code "a la sfException" (highlighted)
+  * When raising an alert display the related code "a la sfException" (highlighted)
   * Count number of ORM statments in the Doctrine or Propel model classes
   * Count langs, i18n catalogs and traductions
-  * Count helpers / functions
+  * Count helpers / anonymous functions
 
 **1.1.0:**
 
