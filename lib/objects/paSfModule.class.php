@@ -461,7 +461,7 @@ class paSfModule extends paAlertable
     foreach ($resultsLevel2 as $filePath)
     {
       $matches = null;
-      preg_match(paProject::$regexps['ENDING_FILENAME'], $filePath, $matches);
+      preg_match(paProject::$regexps['ENDING_PARTIAL_FILENAME'], $filePath, $matches);
       $object = new paSfPartial($this, $matches[1]);
       $fileContent = file_get_contents($filePath);
       $object->setCodeLength(empty($fileContent) ? 0 : count(explode("\n", $fileContent)));

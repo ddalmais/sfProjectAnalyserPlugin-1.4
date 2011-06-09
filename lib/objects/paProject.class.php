@@ -15,8 +15,9 @@ abstract class paProject extends paAlertable
 
   // List of regexp used
   public static $regexps = array(
-    'ENDING_FILENAME' => '/.*\/(.*)$/',
-    'CLASS' => '/.*\/(.*)(.|class.)php$/',
+    'ENDING_FILENAME'         => '/.*\/(.*)$/',
+    'ENDING_PARTIAL_FILENAME' => '/.*\/templates\/(.*)$/',
+    'CLASS'                   => '/.*\/(.*)(.|class.)php$/',
   );
   
   /**

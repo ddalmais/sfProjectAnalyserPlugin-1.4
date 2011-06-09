@@ -132,6 +132,22 @@
   <changelog>
     <release>
       <version>
+        <release>1.0.4</release>
+        <api>1.0.4</api>
+      </version>
+      <stability>
+       <release>stable</release>
+       <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">MIT license</license>
+      <date>2011-06-09</date>
+      <license>MIT</license>
+      <notes>
+        * Fixed names of 2 level partials
+      </notes>
+    </release>
+    <release>
+      <version>
         <release>1.0.3</release>
         <api>1.0.3</api>
       </version>
