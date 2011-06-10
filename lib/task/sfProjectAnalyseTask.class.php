@@ -293,13 +293,16 @@ EOF;
    */
   protected function getConfigSummary()
   {
+    $config = sfYaml::dump($this->config);
+    $config = str_replace(array('false'), array('<span class="red">false</span>'), $config);
+
     $html =  '<ul id="summary" class="treeview-black">';
     $html .= '<li class="closed"><span class="folder"><strong>Analysis configuration</strong></span>';
     $html .= '<ul>';
-    $html .= '  <li><pre>'. sfYaml::dump($this->config). '</pre></li>';
+    $html .= '  <li><pre>'. $config. '</pre></li>';
     $html .= '</ul>';
     $html .= '</ul>';
-    
+
     return $html;
   }
   
