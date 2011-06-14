@@ -140,9 +140,10 @@
        <api>stable</api>
       </stability>
       <license uri="http://www.symfony-project.com/license">MIT license</license>
-      <date>2011-06-09</date>
+      <date>2011-06-14</date>
       <license>MIT</license>
       <notes>
+        * Added the plugin version number in the config summary
         * Outlined desactived features in the config summary
         * Fixed names of 2nd level partials
       </notes>

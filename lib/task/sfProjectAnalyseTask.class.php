@@ -10,6 +10,11 @@
 class sfProjectAnalyseTask extends sfBaseTask
 {
   /**
+   * Version of the plugin.
+   */
+  const VERSION = '1.0.4-DEV';
+
+  /**
    * Return code when the analysis raison no alert not warning.
    */
   const ANALYSIS_OK = 10;
@@ -297,7 +302,7 @@ EOF;
     $config = str_replace(array('false'), array('<span class="red">false</span>'), $config);
 
     $html =  '<ul id="summary" class="treeview-black">';
-    $html .= '<li class="closed"><span class="folder"><strong>Analysis configuration</strong></span>';
+    $html .= '<li class="closed"><span class="folder"><strong>Analysis configuration (plugin version: '. self::VERSION. ')</strong></span>';
     $html .= '<ul>';
     $html .= '  <li><pre>'. $config. '</pre></li>';
     $html .= '</ul>';
